@@ -1,5 +1,5 @@
 // Shared tracking + page logic for Toy Store
-const TRACKING_ENDPOINT = 'https://tracking.example.com/collect'; // <-- replace with your tracking server
+const TRACKING_ENDPOINT = 'https://agentservice-1052691096486.us-central1.run.app/track'; // <-- replace with your tracking server
 
 function sendEvent(name, payload = {}){
   const data = { event: name, payload, page: location.pathname, ts: Date.now(), ua: navigator.userAgent };

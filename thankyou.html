@@ -20,16 +20,16 @@
       <a href="./index.html" class="button">Back to shop</a>
     </div>
   </main>
-<script src="https://agentservice-1052691096486.us-central1.run.app/tag.js"></script>
+<!-- <script src="https://agentservice-1052691096486.us-central1.run.app/tag.js"></script>
 <script>
   // Example: track a purchase event
-  falconTrack('purchase', {
+  falcoznTrack('purchase', {
     orderId: '12345',
     amount: 99.99,
     currency: 'USD'
   });
-</script>
-  <!-- <script>
+</script> -->
+  <script>
     const TRACKING_ENDPOINT = 'https://tracking.example.com/collect'; // change to your tracking server
 
     function sendEvent(name, payload = {}){
@@ -76,7 +76,7 @@
 
     // Also send a thankyou page view
     sendEvent('thankyou_page_view', { orderId });
-  </script> -->
+  </script>
   <script src="./assets/js/script.js" defer></script>
 </body>
 </html>
