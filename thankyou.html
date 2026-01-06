@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thank you — Toy Store</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body class="thankyou">
+  <header>
+    <div class="container">
+      <h1>Thank you!</h1>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="box">
+      <p id="message">Processing your order...</p>
+      <div id="order-summary" style="margin-top:1rem"></div>
+      <a href="./index.html" class="button">Back to shop</a>
+    </div>
+  </main>
+
+  <script>
+    const TRACKING_ENDPOINT = 'https://tracking.example.com/collect'; // change to your tracking server
+
+    function sendEvent(name, payload = {}){
+      const data = { event: name, payload, page: location.pathname, ts: Date.now(), ua: navigator.userAgent };
+      try{
+        if(navigator.sendBeacon){
+          const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+          navigator.sendBeacon(TRACKING_ENDPOINT, blob);
+        } else {
+          fetch(TRACKING_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).catch(()=>{});
+        }
+      }catch(e){ console.warn('tracking error', e); }
+      console.log('tracking:', name, data);
+    }
+
+    // Parse order info from query params
+    const params = new URLSearchParams(location.search);
+    const orderId = params.get('orderId') || ('order-' + Date.now());
+    const amount = params.get('amount') || '0.00';
+
+    // Get cart items from localStorage (if available)
+    const cart = JSON.parse(localStorage.getItem('toy_cart') || '[]');
+
+    // Display order summary
+    const msg = document.getElementById('message');
+    const summary = document.getElementById('order-summary');
+    msg.textContent = 'Thank you for your purchase!';
+
+    if(cart.length){
+      const ul = document.createElement('ul');
+      cart.forEach(i=>{ const li = document.createElement('li'); li.textContent = `${i.name} x${i.qty} — $${(i.price * i.qty).toFixed(2)}`; ul.appendChild(li); });
+      summary.appendChild(ul);
+    } else {
+      summary.textContent = 'No cart details available in localStorage.';
+    }
+    const totalEl = document.createElement('p'); totalEl.innerHTML = `<strong>Order:</strong> ${orderId} &nbsp; <strong>Amount:</strong> $${parseFloat(amount).toFixed(2)}`;
+    summary.appendChild(totalEl);
+
+    // Send purchase event
+    sendEvent('purchase', { orderId, amount: parseFloat(amount), items: cart });
+
+    // Clear cart after sending purchase event
+    try{ localStorage.removeItem('toy_cart'); }catch(e){/* ignore */}
+
+    // Also send a thankyou page view
+    sendEvent('thankyou_page_view', { orderId });
+  </script>
+  <script src="./assets/js/script.js" defer></script>
+</body>
+</html>

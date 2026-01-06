@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Toy Store — Home</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Toy Store</h1>
+    </div>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2>Featured Toys</h2>
+      <div id="products" class="products" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <aside id="cart">
+    <h4>Cart</h4>
+    <ul id="cart-items"></ul>
+    <div style="margin-top:.5rem">
+      <strong>Total: $<span id="cart-total">0.00</span></strong>
+    </div>
+    <div style="margin-top:.5rem">
+      <button id="checkout">Checkout</button>
+    </div>
+  </aside>
+
+  <footer>
+    <div class="container">© Toy Store</div>
+  </footer>
+
+  <script src="./assets/js/script.js" defer></script>
+</body> 
+</html>
