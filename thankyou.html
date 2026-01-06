@@ -30,7 +30,7 @@
   });
 </script> -->
   <script>
-    const TRACKING_ENDPOINT = 'https://tracking.example.com/collect'; // change to your tracking server
+    const TRACKING_ENDPOINT = 'https://agentservice-1052691096486.us-central1.run.app/track'; // change to your tracking server
 
     function sendEvent(name, payload = {}){
       const data = { event: name, payload, page: location.pathname, ts: Date.now(), ua: navigator.userAgent };
